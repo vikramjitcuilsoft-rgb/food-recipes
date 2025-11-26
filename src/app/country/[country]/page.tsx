@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Breadcrumb from '@/src/components/Breadcrumb';
+import ImageWithSkeleton from '@/src/components/ImageWithSkeleton';
 
 const API_BASE = 'https://www.themealdb.com/api/json/v1/1';
 const ITEMS_PER_PAGE = 10; // 10 records per page
@@ -63,7 +64,7 @@ export default function CountryMealsPage() {
                             className="border rounded p-4 hover:shadow-lg cursor-pointer transition"
                             onClick={() => handleMealClick(meal.idMeal)}
                         >
-                            <img
+                            <ImageWithSkeleton
                                 src={meal.strMealThumb}
                                 alt={meal.strMeal}
                                 className="w-full h-48 object-cover rounded mb-2"

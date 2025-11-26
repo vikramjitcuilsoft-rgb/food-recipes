@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Link from 'next/link';
+import ImageWithSkeleton from '@/src/components/ImageWithSkeleton';
 
 const API_BASE = 'https://www.themealdb.com/api/json/v1/1';
 
@@ -50,10 +51,10 @@ function SearchResults() {
           : meals.map((meal) => (
               <Link href={`/meal/${meal.idMeal}`} key={meal.idMeal} className="block">
                 <div className="border rounded p-4 hover:shadow-lg transition-shadow">
-                  <img 
-                    src={meal.strMealThumb} 
+                  <ImageWithSkeleton
+                    src={meal.strMealThumb}
                     alt={meal.strMeal}
-                    className="w-full h-48 object-cover rounded mb-3"
+                    className="w-full h-48 object-cover rounded mb-2"
                   />
                   <h3 className="text-lg font-semibold">{meal.strMeal}</h3>
                 </div>
