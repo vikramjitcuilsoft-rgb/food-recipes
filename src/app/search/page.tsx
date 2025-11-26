@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -13,7 +14,7 @@ interface Meal {
   strMealThumb: string;
 }
 
-export default function SearchPage() {
+function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('query') ?? '';
 
@@ -45,16 +46,16 @@ export default function SearchPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {isLoading
-          ? renderSkeletons(6) // Show 6 skeletons while loading
+          ? renderSkeletons(6)
           : meals.map((meal) => (
-              <Link href={`/meal/${meal.idMeal}`} key={meal.idMeal}>
-                <div className="border rounded p-4 hover:shadow-lg transition cursor-pointer">
-                  <img
-                    src={meal.strMealThumb}
+              <Link href={`/meal/${meal.idMeal}`} key={meal.idMeal} className="block">
+                <div className="border rounded p-4 hover:shadow-lg transition-shadow">
+                  <img 
+                    src={meal.strMealThumb} 
                     alt={meal.strMeal}
-                    className="w-full h-48 object-cover rounded mb-2"
+                    className="w-full h-48 object-cover rounded mb-3"
                   />
-                  <h3 className="font-semibold">{meal.strMeal}</h3>
+                  <h3 className="text-lg font-semibold">{meal.strMeal}</h3>
                 </div>
               </Link>
             ))}
@@ -62,3 +63,23 @@ export default function SearchPage() {
     </div>
   );
 }
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <div key={idx} className="border rounded p-4 animate-pulse">
+              <div className="w-full h-48 bg-gray-300 rounded mb-2"></div>
+              <div className="h-6 bg-gray-300 rounded w-3/4"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    }>
+      <SearchResults />
+    </Suspense>
+  );
+}
+
