@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-md">
-      <div className="max-w-6xl mx-auto px-5 py-3 flex justify-between items-center">
+      <div className="max-w-[79rem] mx-auto px-5 py-3 flex justify-between items-center">
 
         {/* LOGO */}
         <motion.div
